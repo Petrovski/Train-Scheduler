@@ -1,0 +1,30 @@
+div.jumbotron.container {
+    text-align: center;
+    font-size: 80px;
+    background-color: steelblue;
+    color: ivory;
+}
+
+#trainlist {
+    font-weight: bold;
+    font-size: 20px;
+    border: 2px solid steelblue;
+    background-color: steelblue;
+    color: ivory;
+}
+
+#tables {
+    border: 2px solid steelblue;
+}
+
+#addtrain {
+    font-weight: bold;
+    font-size: 20px;
+    border: 2px solid steelblue;
+    background-color: steelblue;
+    color: ivory;
+}
+
+#forms {
+    border: 2px solid steelblue;
+}
