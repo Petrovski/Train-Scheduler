@@ -23,6 +23,8 @@ div.jumbotron.container {
     border: 2px solid steelblue;
     background-color: steelblue;
     color: ivory;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #forms {
