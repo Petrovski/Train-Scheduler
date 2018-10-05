@@ -11,6 +11,36 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+
+database.ref().on("child_added", function (childSnapshot) {
+
+
+    var convert = moment(childSnapshot.val().startTime, "HH:mm").subtract(1, "days")
+    var difference = moment().diff(moment(convert), "minutes")
+    var remainder = difference % childSnapshot.val().frequency
+    var timeTillNext = childSnapshot.val().frequency - remainder
+    var nextTrain = moment().add(timeTillNext, "minutes").format("hh:mm a")
+
+    
+    var newTrain = $("<tr>").append(
+        $("<td>").html("<strong>" + childSnapshot.val().train + "</strong>"),
+        $("<td>").text(childSnapshot.val().destination),
+        $("<td>").text(childSnapshot.val().firsttrain),
+        $("<td>").text(childSnapshot.val().frequency),
+        $("<td>").text(nextTrain)
+    )
+
+    $("#tables").append(newTrain);
+
+    console.log(childSnapshot.val().train);
+    console.log(childSnapshot.val().destination);
+    console.log(childSnapshot.val().firsttrain);
+    console.log(childSnapshot.val().frequency);
+
+}, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+});
+
 $(document).ready(function () {
     
     $("#submit").on("click", function(){
@@ -35,22 +65,5 @@ $(document).ready(function () {
             dateAdded: firebase.database.ServerValue.TIMESTAMP
         });
 
-        database.ref().on("child_added", function (childSnapshot) {
-
-        var newTrain = $("<tr>")
-        $("#tables").append(newTrain);
-        $(newTrain).prepend($("<td>")).text(train);
-        $(newTrain).append($("<td>")).text(destination);
-        $(newTrain).append($("<td>")).text(firsttrain);
-        $(newTrain).append($("<td>")).text(frequency);
-
-            console.log(childSnapshot.val().train);
-            console.log(childSnapshot.val().destination);
-            console.log(childSnapshot.val().firsttrain);
-            console.log(childSnapshot.val().frequency);
-
-        }, function (errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        });
     });
 });
